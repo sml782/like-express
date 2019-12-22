@@ -1,0 +1,21 @@
+{
+  "name": "like-express",
+  "version": "0.0.1",
+  "description": "简化版 express",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://a.com"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "亖巠",
+  "license": "ISC"
+}
