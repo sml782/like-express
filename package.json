@@ -7,7 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "cross-env NODE_ENV=development nodemon index.js",
+    "inspect": "cross-env NODE_ENV=development nodemon --inspect index.js",
+    "prod": "cross-env NODE_ENV=production nodemon index.js",
     "test": "npm run test"
   },
   "repository": {
@@ -18,5 +20,9 @@
     "express"
   ],
   "author": "亖巠",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^6.0.3",
+    "nodemon": "^2.0.2"
+  }
 }
