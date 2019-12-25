@@ -1,6 +1,8 @@
 
 // const http = require('http');
 const createError = require('http-errors');
+const fs = require('fs');
+const path = require('path');
 const express = require('./lib/express');
 
 // 本次 http 请求的实例
@@ -8,15 +10,15 @@ const app = express();
 
 app.use((req, res, next) => {
   const { method = '', url = '/' } = req;
-  console.log(`${method} ${url}`)
+  console.log(`${method} ${url}`);
   next();
 });
 
 app.get('/favicon.ico', (req, res, next) => {
   console.log('请求logo');
-  // res.statusCode = 404;
-  res.writeHeader(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-  res.end();
+  const image = fs.readFileSync(path.join(__dirname, './public/image/favicon.ico'));
+  res.writeHeader(200, { 'Content-Type': 'image/x-icon' });
+  res.end(image);
 });
 
 app.use((req, res, next) => {
@@ -42,7 +44,7 @@ app.get('/api', (req, res, next) => {
 function loginCheck(req, res, next) {
   setTimeout(() => {
     console.log('模拟登陆成功');
-    next('a');
+    next();
   });
 }
 
