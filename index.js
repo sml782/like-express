@@ -1,5 +1,6 @@
 
 // const http = require('http');
+const createError = require('http-errors');
 const express = require('./lib/express');
 
 // 本次 http 请求的实例
@@ -55,13 +56,23 @@ app.get('/api/getCookie', loginCheck, (req, res, next) => {
 
 // 每找到路由
 app.use((req, res, next) => {
-  next('你这啥啊，也没这路由啊!');
+  // next('你这啥啊，也没这路由啊!');
+  next(createError(404, '你这啥啊，也没这路由啊!'));
 });
 
 // 捕获错误
 app.use((err, req, res, next) => {
-  res.writeHeader(500, { 'Content-Type': 'text/html; charset=utf-8' });
-  res.end('<h1>无法访问此网站</h1>');
+  let stack = err || '';
+  let code = 500;
+  if (!(err instanceof Error)) {
+    stack = String(stack);
+  } else {
+    stack = err.stack || err.message;
+    code = err.code || 500;
+  }
+
+  res.writeHeader(code, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end(`<pre>${stack}</pre>`);
 })
 
 app.listen(8000, () => {
